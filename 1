@@ -1,0 +1,34 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+class Ctriangle{
+private:
+    double e1,e2,e3;
+public:
+    Ctriangle(double a,double b,double c)
+    {
+        e1=a;
+        e2=b;
+        e3=c;
+    }
+    double getperimeter(){
+        return e1+e2+e3;
+    }
+    double getarea(){
+        double x=getperimeter()/2;
+        return sqrt(x*(x-e1)*(x-e2)*(x-e3));
+    }
+    void display()
+    {
+        cout<<"ctriangle:"<<"a="<<e1<<",b="<<e2<<",c="<<e3<<endl;
+        cout<<"area:"<<getarea()<<endl;
+        cout<<"perimeter"<<getperimeter()<<endl;
+    }
+
+};
+int main()
+{
+    Ctriangle A(3,4,5);
+    A.display();
+    return 0;
+}
