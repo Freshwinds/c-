@@ -1,0 +1,24 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+class point{
+private:
+    double x,y;
+public :
+    point(double xx,double yy)
+    {
+        x=xx;
+        y=yy;
+    }
+    double Distance(const point&Point){
+        return sqrt((x-Point.x)*(x-Point.x)+(y-Point.y)*(y-Point.y));
+
+    }
+};
+int main()
+{
+        point a(1,2);
+        point b(2,3);
+        cout<<a.Distance(b)<<endl;
+        return 0;
+}
