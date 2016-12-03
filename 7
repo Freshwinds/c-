@@ -1,0 +1,135 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+class String{
+  private:
+      char *str;
+      int len;
+  public:
+    String();
+    String(const char *p);
+    String(String &c);
+    ~String();
+    char *getstr()const;
+    void showstr()const;
+    bool IsSubstring(const char *Str);
+    bool IsSubstring(const String &Str);
+    int str2num();
+    void toUppercase();
+};
+String::String()
+{
+    str=NULL;
+    len=0;
+}
+String::String(const char *p)
+{
+    len=strlen(p);
+    if(len!=0)
+    {
+    str=new char[len+1];
+    strcpy(str,p);
+    }
+}
+String::String(String &c)
+{
+    len=c.len;
+    if(len!=0)
+    {
+        str=new char[len+1];
+        strcpy(str,c.str);
+    }
+}
+String::~String()
+{
+    if(str!=NULL)
+    {
+        delete []str;
+        str=NULL;
+        len=0;
+    }
+}
+char *String::getstr()const
+{
+    return str;
+}
+void String::showstr()const
+{
+    cout<<str<<endl;
+}
+bool String::IsSubstring(const char *Str)
+{
+    int i,j,k;
+    int len1=strlen(Str);
+    for(i=0;i<len;i++)
+    {
+        j=0;
+        k=i;
+        while(j<len1&&str[k]==Str[j])
+        {
+            j++;
+            k++;
+        }
+        if(str[j]=='\0')
+            return true;
+    }
+    return false;
+}
+bool String::IsSubstring(const String &Str)
+{
+    int i,j,k;
+    int len1=Str.len;
+    for(i=0;i<len;i++)
+    {
+        j=0;
+        k=i;
+        while(str[k++]==Str.str[j++])
+        {
+            if(j>=len1)
+                break;
+        }
+        if(Str.str[j]=='\0')
+            return true;
+    }
+    return false;
+
+}
+int String::str2num()
+{
+    int num=0;
+    for(int i=0;i<len;i++)
+    {
+        if(str[i]>='0'&&str[i]<='9')
+            num=num*10+(str[i]-'0');
+    }
+    return num;
+}
+void String::toUppercase()
+{
+
+    for(int i=0;i<len;i++)
+    {
+        if(str[i]>='a'&&str[i]<='z')
+            str[i]=str[i]-'a'+'A';
+    }
+}
+int main()
+{
+    String s("abcdefghijklmnopuvwxyz");
+    String s2(s);
+    cout<<"s2:"<<s2.getstr()<<endl;
+    char test[31];
+    cout<<"please input a test string:";
+    cin>>test;
+    cout<<"is test  substring of s2:";
+    if(s.IsSubstring(test))
+        cout<<"yes"<<endl;
+    else
+        cout<<"no"<<endl;
+    //cout<<(s.IsSubstring(test)=="true")?"yes":"no"<<endl;
+    cout<<"s number:"<<s.str2num()<<endl;
+    s.toUppercase();
+    cout<<"s to uppercase:"<<s.getstr()<<endl;
+
+    return 0;
+}
