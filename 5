@@ -1,0 +1,72 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+class Student{
+private:
+    char ID[10];
+    char name[12];
+    double grade1;
+    double grade2;
+    double grade3;
+
+    static double sum1;
+    static double sum2;
+    static double sum3;
+
+    static int ssum;
+
+public:
+    Student(char ID[],char name[],double grade1,double grade2,double grade3);
+    void display();
+    double average1();
+    double average2();
+    double average3();
+};
+
+int Student::ssum=0;
+double Student::sum1=0;
+double Student::sum2=0;
+double Student::sum3=0;
+
+Student::Student(char ID[],char name[],double grade1,double grade2,double grade3)
+{
+    strcpy(this->ID,ID);
+    strcpy(this->name,name);
+    this->grade1=grade1;
+    this->grade2=grade2;
+    this->grade3=grade3;
+       sum1+=grade1;
+    sum2+=grade2;
+    sum3+=grade3;
+    ssum++;
+}
+void Student::display()
+{
+    cout<<"grade1:"<<grade1<<" grade2:"<<grade2<<" grade3:"<<grade3<<endl;
+}
+double Student::average1()
+{
+    return sum1/ssum;
+}
+double Student::average2()
+{
+    return sum2/ssum;
+}
+double Student::average3()
+{
+    return sum3/ssum;
+}
+
+int main()
+{
+    Student s1("2015210764","foam",90,90,90);
+    Student s2("2015210765","daisy",91,91,91);
+    Student s3("2015210766","blue",92,92,92);
+    s1.display();
+    s2.display();
+    s3.display();
+    cout<<"the average of course1:"<<s1.average1()<<endl;
+    cout<<"the average of course2:"<<s2.average2()<<endl;
+    cout<<"the average of course3:"<<s3.average3()<<endl;
+    return 0;
+}
