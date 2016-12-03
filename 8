@@ -1,0 +1,172 @@
+#include<iostream>
+using namespace std;
+class Set{
+private:
+    int *x;
+    int n;
+public:
+   Set();
+   Set(Set &s);
+   ~Set();
+   void showelemnt()const;
+   bool isempty(){return (n?false:true);};
+   int size(){return n;};
+   bool iselement(int e)const;
+   bool isequal(const Set &s)const;
+   bool issubset(const Set &s)const;
+   Set &iinsert(int e);
+   Set Union(const Set &s);
+   Set intersection(const Set &s)const;
+   Set difference(const Set &s)const;
+};
+Set::Set()
+{
+    x=NULL;
+    n=0;
+}
+Set::Set(Set &s)
+{
+    int len=s.n;
+    if(len!=0)
+    {
+        x=new int [len+1];
+        for(int i=1;i<=len;i++)
+        {
+            x[i]=s.x[i];
+        }
+    }
+    n=s.n;
+}
+Set::~Set()
+{
+    if(x!=NULL)
+    {
+        delete []x;
+        x=NULL;
+        n=0;
+    }
+}
+void Set::showelemnt()const
+{
+    cout<<"{";
+    for(int i=1;i<n;i++)
+    {
+        cout<<x[i]<<",";
+    }
+    cout<<x[n]<<"}"<<endl;
+}
+bool Set::iselement(int e)const
+{
+    for(int i=1;i<=n;i++)
+    {
+        if(x[i]==e)
+            return true;
+    }
+    return false;
+}
+bool Set::isequal(const Set &s)const
+{
+    if(s.n!=n) return false;
+    for(int i=1;i<=n;i++)
+    {
+        if(x[i]!=s.x[i])
+            return false;
+
+    }
+    return true;
+}
+bool Set::issubset(const Set &s)const
+{
+  if(s.n>n) return false;
+  for(int i=1;i<=s.n;i++)
+  {
+      if(iselement(s.x[i])==false)
+        return false;
+  }
+  return true;
+}
+Set &Set::iinsert(int e)
+{
+    if(iselement(e)) return *this;
+    Set temp;
+    temp.x=new int[n+1];
+    for(int i=1;i<=n;i++)
+        temp.x[i]=x[i];
+    n++;
+    if(x!=NULL)
+        delete []x;
+    x=new int[n+1];
+    for(int i=1;i<n;i++)
+        x[i]=temp.x[i];
+    x[n]=e;
+    return *this;
+}
+Set Set::Union(const Set &s)
+{
+    Set us;
+    for(int i=1;i<=n;i++)
+        us.iinsert(x[i]);
+    for(int i=1;i<=s.n;i++)
+    {
+        if(!us.iselement(s.x[i]))
+            us.iinsert(s.x[i]);
+    }
+    return us;
+}
+Set Set::intersection(const Set &s)const
+{
+    Set is;
+    for(int i=1;i<=n;i++)
+    {
+        if(iselement(s.x[i]))
+            is.iinsert(s.x[i]);
+    }
+    return is;
+}
+Set Set::difference(const Set &s)const
+{
+    Set ds;
+    for(int i=1;i<=n;i++)
+    {
+        if(!s.iselement(x[i]))
+            ds.iinsert(x[i]);
+    }
+    return ds;
+}
+int main()
+{
+    Set s1;
+    s1.iinsert(5);
+    if(!s1.iselement(2))
+        s1.iinsert(2);
+    s1.iinsert(0);
+    cout<<"s1=";
+    s1.showelemnt();
+    cout<<"size="<<s1.size()<<endl;
+
+    Set s2;
+    s2.iinsert(7);
+    s2.iinsert(6);
+    s2.iinsert(4);
+    cout<<"s2=";
+    s2.showelemnt();
+
+    Set s3(s1);
+    cout<<"s3=";
+    s3.showelemnt();
+
+    cout<<"s1==s2?";
+    cout<<((s1.isequal(s2))?"yes":"no")<<endl;
+
+    Set s4;
+    s4.iinsert(1);
+    cout<<"is s4 the subset of s1?";
+    cout<<((s1.issubset(s4))?"yes":"no")<<endl;
+
+    cout<<"s2 union s4 =";
+    s2.Union(s4).showelemnt();
+    cout<<"s1 difference s4=";
+    s1.difference(s4).showelemnt();
+
+    return 0;
+}
