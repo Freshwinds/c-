@@ -1,0 +1,59 @@
+#include<iostream>
+using namespace std;
+class clock{
+private:
+    int hour,minute,second;
+    int shour,sminute,ssecond;
+public:
+    clock(int hour,int minute,int second);
+    void SetAlarm(int hour,int minute,int second);
+    void display();
+    void run();
+
+};
+clock::clock(int hour,int minute,int second){
+        this->hour=hour;
+        this->minute=minute;
+        this->second=second;
+}
+void clock::SetAlarm(int hour,int minute,int second){
+        this->shour=hour;
+        this->sminute=minute;
+        this->ssecond=second;
+}
+void clock::run()
+{
+    second++;
+    if(second>=60)
+    {
+        minute++;
+        second=0;
+    }
+    if(minute>=60){
+        hour++;
+        minute=0;
+    }
+    if(hour>24)
+    {
+        hour=0;
+
+    }
+    if(hour==shour&&sminute==minute&&ssecond==second){
+        cout<<"the time is over"<<endl;
+    }
+}
+void clock::display()
+{
+    cout<<hour<<":"<<minute<<":"<<second<<endl;
+}
+
+int main()
+{
+    clock A(21,9,30);
+    A.SetAlarm(6,0,0);
+    for(int i=0;i<24*60*60;i++)
+    {
+        A.run();
+    }
+    return 0;
+}
