@@ -1,0 +1,73 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+const int MAXN=20;
+class System{
+private:
+    char Username[MAXN][100];
+    char password[MAXN][100];
+    static int num;
+public:
+    System(char username[],char ppassword[]);
+    void adduser(char Username[],char ppassword[]);
+    bool login(char name[],char ppassword[]);
+};
+int System::num=0;
+System::System(char username[],char ppassword[])
+{
+    strcpy(Username[num],username);
+    strcpy(password[num],ppassword);
+    for(int i=0;password[num][i]!='\0';i++)
+    {
+        password[num][i]+=i;
+    }
+    num++;
+}
+void System::adduser(char username[],char ppassword[])
+{
+    strcpy(Username[num],username);
+    strcpy(password[num],ppassword);
+    for(int i=0;password[num][i]!='\0';i++)
+    {
+        password[num][i]+=i;
+    }
+    num++;
+
+}
+bool System::login(char usename[],char ppassword[])
+{
+    for(int i=0;i<num;i++)
+    {
+        if(strcmp(Username[i],usename)==0)
+        {
+            for(int j=0;ppassword[j]!='\0';j++)
+            {
+                if(ppassword[j]+j!=password[i][j])
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+int main()
+{
+    char name[10],password[10];
+    System s("red","123");
+    s.adduser("blue","456");
+    s.adduser("yellow","789");
+    cout<<"name:";
+    cin>>name;
+    cout<<"password:";
+    cin>>password;
+    if(s.login(name,password))
+    {
+        cout<<"Success login"<<endl;
+    }
+    else
+    {
+        cout<<"the wrong password or user name"<<endl;
+    }
+    return 0;
+}
